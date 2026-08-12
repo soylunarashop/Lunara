@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lunara — Moda</title>
+<meta name="description" content="Piezas pensadas para acompañar cada fase. Escríbenos y armamos tu pedido por WhatsApp.">
+
+<!-- Open Graph (WhatsApp, Instagram, Facebook) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lunara">
+<meta property="og:title" content="Lunara — Moda">
+<meta property="og:description" content="Piezas pensadas para acompañar cada fase. Escríbenos y armamos tu pedido por WhatsApp.">
+<meta property="og:image" content="https://lunarashop.co/icono.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:url" content="https://lunarashop.co/">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lunara — Moda">
+<meta name="twitter:description" content="Piezas pensadas para acompañar cada fase. Escríbenos y armamos tu pedido por WhatsApp.">
+<meta name="twitter:image" content="https://lunarashop.co/icono.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Jost:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="icono.png" type="image/x-icon">
+</head>
+<body>
+
+  <nav class="nav">
+    <span class="nav-mark">LUNARA</span>
+    <a class="nav-link" href="#pedir">Ver catalogo</a>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-content">
+      <img class="hero-img" src="icono.png" alt="Lunara" loading="lazy">
+      <p class="hero-eyebrow">Nueva colección</p>
+      <h1 class="hero-title">Lunara</h1>
+      <p class="hero-sub">Moda, belleza y estilo para ti.</p>
+      <a class="btn-wa" id="cta-hero" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.3 2 11.6c0 1.9.6 3.7 1.6 5.2L2 22l5.4-1.4c1.5.8 3.1 1.2 4.6 1.2 5.5 0 10-4.3 10-9.6S17.5 2 12 2zm0 17.4c-1.4 0-2.8-.4-4-1.1l-.3-.2-3.2.8.9-3.1-.2-.3c-.8-1.3-1.3-2.7-1.3-4.3 0-4.3 3.6-7.8 8-7.8s8 3.5 8 7.8-3.6 8-8 8zm4.4-5.8c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.7 1-.1.2-.3.2-.5.1-1.3-.6-2.2-1.2-3-2.6-.2-.4.2-.4.6-1.2.1-.1 0-.3 0-.4-.1-.1-.5-1.3-.7-1.8-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c.1.1 1.6 2.5 4 3.5.6.2 1 .4 1.4.5.6.2 1.1.1 1.5-.1.5-.2 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.1-.2-.1-.4-.2z"/></svg>
+        Escríbenos por WhatsApp
+      </a>
+    </div>
+  </header>
+
+  <!-- COLLECTION -->
+  <section class="collection" id="pedir">
+    <div class="section-head">
+      <p class="section-eyebrow">Disponible ahora</p>
+      <h2 class="section-title">Colección actual</h2>
+    </div>
+
+    <div class="filters">
+      <div class="tabs-wrap">
+        <div class="tabs" id="tabs"></div>
+      </div>
+      <input class="search" id="search" type="text" placeholder="Buscar producto...">
+    </div>
+
+    <div class="grid" id="product-grid"></div>
+  </section>
+
+  <!-- STATEMENT -->
+  <section class="statement">
+    <p>Moda, belleza, accesorios y detalles que te harán brillar.</p>
+    <div class="phase-row">
+      <div class="phase phase--crescent"></div>
+      <div class="phase phase--half"></div>
+      <div class="phase phase--gibbous"></div>
+      <div class="phase phase--full"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <h3 class="footer-title">¿Lista tu compra?</h3>
+    <p class="footer-sub">Escríbenos y te ayudaremos a elegir tu talla y forma de envío.</p>
+    <a class="btn-wa" id="cta-footer" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.3 2 11.6c0 1.9.6 3.7 1.6 5.2L2 22l5.4-1.4c1.5.8 3.1 1.2 4.6 1.2 5.5 0 10-4.3 10-9.6S17.5 2 12 2zm0 17.4c-1.4 0-2.8-.4-4-1.1l-.3-.2-3.2.8.9-3.1-.2-.3c-.8-1.3-1.3-2.7-1.3-4.3 0-4.3 3.6-7.8 8-7.8s8 3.5 8 7.8-3.6 8-8 8zm4.4-5.8c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.7 1-.1.2-.3.2-.5.1-1.3-.6-2.2-1.2-3-2.6-.2-.4.2-.4.6-1.2.1-.1 0-.3 0-.4-.1-.1-.5-1.3-.7-1.8-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c.1.1 1.6 2.5 4 3.5.6.2 1 .4 1.4.5.6.2 1.1.1 1.5-.1.5-.2 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.1-.2-.1-.4-.2z"/></svg>
+      Escríbenos por WhatsApp
+    </a>
+
+    <!-- Cambia los href="#" por tus enlaces reales cuando los tengas -->
+    <div class="socials">
+      <a class="social-link" href="https://www.instagram.com/lunarashopcol/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a class="social-link" href="https://www.tiktok.com/@lunarashopcol?_r=1&_t=ZS-98ksW2pjkO2" target="_blank" rel="noopener" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3c.3 2.1 1.7 3.6 3.9 3.8v2.6c-1.4.1-2.7-.3-3.9-1.1v6.4c0 3.1-2.5 5.3-5.3 5.3S6 17.8 6 14.7s2.5-5.3 5.2-5.3c.3 0 .6 0 .9.1v2.7a2.7 2.7 0 1 0 1.9 2.6V3h2.5z"/></svg>
+      </a>
+      <a class="social-link" href="https://web.facebook.com/people/LunaraShop/61593035693668/?rdid=KqLOBjOadIaREwLF&share_url=https%3A%2F%2Fweb.facebook.com%2Fshare%2F17yA3tT1KW%2F%3F_rdc%3D11%26_rdr&_rdc=10&_rdr#" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9.2"/><path d="M13.8 21V13.6h2.3l.4-2.8h-2.7V9c0-.8.2-1.4 1.4-1.4h1.4V5.1c-.3 0-1.1-.1-2-.1-2 0-3.4 1.2-3.4 3.5v2.3H9v2.8h2.2V21" fill="none"/></svg>
+      </a>
+    </div>
+
+    <p class="footer-meta">LUNARA © 2026 · <a href="admin.html" class="admin-link">Acceso privado</a></p>
+  </footer>
+
+  <!-- VISOR DE IMAGEN GRANDE -->
+  <div id="lightbox" class="lightbox hidden" onclick="if(event.target===this) closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Cerrar">✕</button>
+    <button id="lbPrev" class="lightbox-nav lightbox-prev hidden" onclick="lightboxNav(-1)" aria-label="Anterior">‹</button>
+    <img id="lightboxImg" class="lightbox-img" alt="Vista ampliada del producto">
+    <button id="lbNext" class="lightbox-nav lightbox-next hidden" onclick="lightboxNav(1)" aria-label="Siguiente">›</button>
+    <div id="lightboxDots" class="lightbox-dots"></div>
+  </div>
+
+  <!-- FLOATING BUTTON -->
+  <a class="float-wa" id="cta-float" href="#" target="_blank" rel="noopener" aria-label="Pedir por WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.3 2 11.6c0 1.9.6 3.7 1.6 5.2L2 22l5.4-1.4c1.5.8 3.1 1.2 4.6 1.2 5.5 0 10-4.3 10-9.6S17.5 2 12 2zm0 17.4c-1.4 0-2.8-.4-4-1.1l-.3-.2-3.2.8.9-3.1-.2-.3c-.8-1.3-1.3-2.7-1.3-4.3 0-4.3 3.6-7.8 8-7.8s8 3.5 8 7.8-3.6 8-8 8zm4.4-5.8c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.7 1-.1.2-.3.2-.5.1-1.3-.6-2.2-1.2-3-2.6-.2-.4.2-.4.6-1.2.1-.1 0-.3 0-.4-.1-.1-.5-1.3-.7-1.8-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c.1.1 1.6 2.5 4 3.5.6.2 1 .4 1.4.5.6.2 1.1.1 1.5-.1.5-.2 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.1-.2-.1-.4-.2z"/></svg>
+  </a>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+
+<script>
+  const $ = id => document.getElementById(id);
+
+  const WHATSAPP_NUMBER = "573232971714";
+  const DEFAULT_MESSAGE = "Hola, quiero más información sobre la colección de Lunara.";
+
+  const WA_ICON = `
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2C6.5 2 2 6.3 2 11.6c0 1.9.6 3.7 1.6 5.2L2 22l5.4-1.4c1.5.8 3.1 1.2 4.6 1.2 5.5 0 10-4.3 10-9.6S17.5 2 12 2zm0 17.4c-1.4 0-2.8-.4-4-1.1l-.3-.2-3.2.8.9-3.1-.2-.3c-.8-1.3-1.3-2.7-1.3-4.3 0-4.3 3.6-7.8 8-7.8s8 3.5 8 7.8-3.6 8-8 8zm4.4-5.8c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.7 1-.1.2-.3.2-.5.1-1.3-.6-2.2-1.2-3-2.6-.2-.4.2-.4.6-1.2.1-.1 0-.3 0-.4-.1-.1-.5-1.3-.7-1.8-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c.1.1 1.6 2.5 4 3.5.6.2 1 .4 1.4.5.6.2 1.1.1 1.5-.1.5-.2 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.1-.2-.1-.4-.2z"/>
+    </svg>
+  `;
+
+  let PRODUCTS = [];
+  let activeCategory = "Todos";
+  let searchTerm = "";
+
+  /* =========================
+     CONFIGURACIÓN SUPABASE
+  ========================= */
+
+  const configured =
+    window.LUNARA_CONFIG &&
+    !window.LUNARA_CONFIG.SUPABASE_URL.includes("PEGA_AQUI") &&
+    !window.LUNARA_CONFIG.SUPABASE_ANON_KEY.includes("PEGA_AQUI");
+
+  const supabaseClient = configured
+    ? window.supabase.createClient(
+        window.LUNARA_CONFIG.SUPABASE_URL,
+        window.LUNARA_CONFIG.SUPABASE_ANON_KEY
+      )
+    : null;
+
+
+  /* =========================
+     WHATSAPP
+  ========================= */
+
+  function waLink(message) {
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  }
+
+
+  /* =========================
+     FORMATO PRECIO
+  ========================= */
+
+  function formatPrice(value) {
+    const numeric = Number(value);
+
+    if (!Number.isFinite(numeric)) {
+      return String(value ?? "");
+    }
+
+    return `$${Math.round(numeric).toLocaleString("es-CO")}`;
+  }
+
+
+  /* =========================
+     SEGURIDAD HTML
+  ========================= */
+
+  function escapeHTML(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+
+  /* =========================
+     VISOR DE IMAGEN GRANDE (LIGHTBOX)
+  ========================= */
+
+  let lightboxImages = [];
+  let lightboxIndex = 0;
+
+  window.cycleCardImage = (id, dir) => {
+    const producto = PRODUCTS.find(p => String(p.id) === String(id));
+    if (!producto || !producto.image2) return;
+
+    const img = $(`cardImg-${id}`);
+    if (!img) return;
+
+    const images = [producto.image, producto.image2];
+    const nextIndex =
+      (Number(img.dataset.index || 0) + dir + images.length) % images.length;
+
+    img.src = images[nextIndex];
+    img.dataset.index = nextIndex;
+
+    document
+      .querySelectorAll(`#dots-${id} .dot`)
+      .forEach((dot, i) => dot.classList.toggle("is-active", i === nextIndex));
+  };
+
+  window.openLightbox = id => {
+    const producto = PRODUCTS.find(p => String(p.id) === String(id));
+    if (!producto) return;
+
+    lightboxImages = [producto.image, producto.image2].filter(Boolean);
+
+    const cardImg = $(`cardImg-${id}`);
+    lightboxIndex = cardImg ? Number(cardImg.dataset.index || 0) : 0;
+    if (lightboxIndex >= lightboxImages.length) lightboxIndex = 0;
+
+    renderLightbox();
+    $("lightbox").classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+  };
+
+  window.closeLightbox = () => {
+    $("lightbox").classList.add("hidden");
+    document.body.style.overflow = "";
+  };
+
+  window.lightboxNav = dir => {
+    lightboxIndex =
+      (lightboxIndex + dir + lightboxImages.length) % lightboxImages.length;
+    renderLightbox();
+  };
+
+  function renderLightbox() {
+    $("lightboxImg").src = lightboxImages[lightboxIndex];
+
+    const multi = lightboxImages.length > 1;
+    $("lbPrev").classList.toggle("hidden", !multi);
+    $("lbNext").classList.toggle("hidden", !multi);
+
+    $("lightboxDots").innerHTML = multi
+      ? lightboxImages
+          .map((_, i) => `<span class="dot${i === lightboxIndex ? " is-active" : ""}"></span>`)
+          .join("")
+      : "";
+  }
+
+  document.addEventListener("keydown", e => {
+    if ($("lightbox").classList.contains("hidden")) return;
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowRight") lightboxNav(1);
+    if (e.key === "ArrowLeft") lightboxNav(-1);
+  });
+
+
+  /* =========================
+     ESTADOS
+  ========================= */
+
+  function showLoading() {
+    document.getElementById("product-grid").innerHTML =
+      `<p class="empty-state">Cargando colección...</p>`;
+  }
+
+
+  function showSetupError() {
+    document.getElementById("tabs").innerHTML = "";
+
+    document.getElementById("product-grid").innerHTML =
+      `<p class="empty-state">
+        Lunara todavía no está conectada a la base de datos.
+        Completa config.js para activarla.
+      </p>`;
+  }
+
+
+  function showError() {
+    document.getElementById("tabs").innerHTML = "";
+
+    document.getElementById("product-grid").innerHTML =
+      `<p class="empty-state">
+        No pudimos cargar la colección. Intenta nuevamente.
+      </p>`;
+  }
+
+
+  function showEmptyCatalog() {
+    document.getElementById("tabs").innerHTML = "";
+
+    document.getElementById("product-grid").innerHTML =
+      `<p class="empty-state">
+        Aún no hay productos disponibles.
+      </p>`;
+  }
+
+
+  /* =========================
+     CARGAR PRODUCTOS
+  ========================= */
+
+  async function loadProducts() {
+
+    showLoading();
+
+    if (!supabaseClient) {
+      showSetupError();
+      return;
+    }
+
+    try {
+
+      const { data, error } = await supabaseClient
+        .from("Productos")
+        .select("id,nombre,precio,categoria,foto_url,foto_url_2")
+        .order("id", { ascending: false });
+
+      if (error) {
+        console.error("Error cargando Productos:", error);
+        showError();
+        return;
+      }
+
+      /*
+        Supabase:
+        
+        nombre    → nombre
+        precio    → precio
+        categoria → categoria
+        foto_url  → foto_url
+
+        Aquí creamos el formato interno
+        que ya utiliza la interfaz.
+      */
+
+      PRODUCTS = (data || [])
+        .map(producto => ({
+          id: producto.id,
+          name: producto.nombre,
+          price: producto.precio,
+          category: producto.categoria,
+          image: producto.foto_url,
+          image2: producto.foto_url_2 || null
+        }))
+        .filter(producto =>
+          producto.name &&
+          producto.price !== null &&
+          producto.price !== undefined &&
+          producto.category &&
+          producto.image
+        );
+
+      if (!PRODUCTS.length) {
+        showEmptyCatalog();
+        return;
+      }
+
+      activeCategory = "Todos";
+
+      renderTabs();
+      renderGrid();
+
+    } catch (error) {
+
+      console.error(
+        "Error inesperado cargando productos:",
+        error
+      );
+
+      showError();
+    }
+  }
+
+
+  /* =========================
+     CATEGORÍAS
+  ========================= */
+
+  function renderTabs() {
+
+    const categories = [
+      "Todos",
+      ...new Set(
+        PRODUCTS
+          .map(producto => producto.category)
+          .filter(Boolean)
+      )
+    ];
+
+    const tabsEl =
+      document.getElementById("tabs");
+
+    tabsEl.innerHTML =
+      categories
+        .map(category => `
+          <button
+            class="tab${category === activeCategory ? " is-active" : ""}"
+            data-cat="${escapeHTML(category)}"
+          >
+            ${escapeHTML(category)}
+          </button>
+        `)
+        .join("");
+
+
+    tabsEl
+      .querySelectorAll(".tab")
+      .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+          activeCategory =
+            button.getAttribute("data-cat");
+
+          renderTabs();
+          renderGrid();
+        });
+
+      });
+  }
+
+
+  /* =========================
+     PRODUCTOS FILTRADOS
+  ========================= */
+
+  function getFilteredProducts() {
+
+    const term =
+      searchTerm
+        .trim()
+        .toLowerCase();
+
+    return PRODUCTS.filter(producto => {
+
+      const name =
+        String(producto.name || "")
+          .toLowerCase();
+
+      const category =
+        String(producto.category || "")
+          .toLowerCase();
+
+      const matchesCategory =
+        activeCategory === "Todos" ||
+        producto.category === activeCategory;
+
+      const matchesSearch =
+        !term ||
+        name.includes(term) ||
+        category.includes(term);
+
+      return matchesCategory && matchesSearch;
+    });
+  }
+
+
+  /* =========================
+     MOSTRAR PRODUCTOS
+  ========================= */
+
+  function renderGrid() {
+
+    const grid =
+      document.getElementById("product-grid");
+
+    const filtered =
+      getFilteredProducts();
+
+    if (!filtered.length) {
+
+      grid.innerHTML =
+        `<p class="empty-state">
+          No encontramos productos con esa búsqueda.
+        </p>`;
+
+      return;
+    }
+
+
+    grid.innerHTML =
+      filtered
+        .map(producto => `
+
+          <div class="card">
+
+            <div
+              class="card-img-wrap"
+              onclick="openLightbox('${producto.id}')"
+            >
+              <img
+                id="cardImg-${producto.id}"
+                class="card-img"
+                src="${escapeHTML(producto.image)}"
+                alt="${escapeHTML(producto.name)}"
+                loading="lazy"
+                data-index="0"
+              >
+              ${producto.image2 ? `
+              <button
+                class="card-arrow card-arrow-prev"
+                onclick="event.stopPropagation(); cycleCardImage('${producto.id}',-1)"
+                aria-label="Foto anterior"
+              >‹</button>
+              <button
+                class="card-arrow card-arrow-next"
+                onclick="event.stopPropagation(); cycleCardImage('${producto.id}',1)"
+                aria-label="Foto siguiente"
+              >›</button>
+              <div class="img-dots" id="dots-${producto.id}">
+                <span class="dot is-active"></span>
+                <span class="dot"></span>
+              </div>` : ""}
+            </div>
+
+            <p class="card-name">
+              ${escapeHTML(producto.name)}
+            </p>
+
+            <p class="card-desc">
+              ${escapeHTML(producto.category)}
+            </p>
+
+            <p class="card-price">
+              ${escapeHTML(formatPrice(producto.price))}
+            </p>
+
+            <a
+              class="btn-wa-ghost"
+              href="${waLink(
+                `Hola, me interesa el producto: ${producto.name}`
+              )}"
+              target="_blank"
+              rel="noopener"
+            >
+              ${WA_ICON} Pedir
+            </a>
+
+          </div>
+
+        `)
+        .join("");
+  }
+
+
+  /* =========================
+     BUSCADOR
+  ========================= */
+
+  const searchInput =
+    document.getElementById("search");
+
+  if (searchInput) {
+
+    searchInput.addEventListener(
+      "input",
+      event => {
+
+        searchTerm =
+          event.target.value;
+
+        renderGrid();
+      }
+    );
+  }
+
+
+  /* =========================
+     BOTONES WHATSAPP
+  ========================= */
+
+  const ctaHero =
+    document.getElementById("cta-hero");
+
+  if (ctaHero) {
+    ctaHero.href =
+      waLink(DEFAULT_MESSAGE);
+  }
+
+
+  const ctaFooter =
+    document.getElementById("cta-footer");
+
+  if (ctaFooter) {
+    ctaFooter.href =
+      waLink(DEFAULT_MESSAGE);
+  }
+
+
+  const ctaFloat =
+    document.getElementById("cta-float");
+
+  if (ctaFloat) {
+    ctaFloat.href =
+      waLink(DEFAULT_MESSAGE);
+  }
+
+
+  /* =========================
+     CONTADOR DE VISITAS
+     (suma 1 visita al día actual;
+     no guarda IP ni datos personales)
+  ========================= */
+
+  if (supabaseClient) {
+    supabaseClient.rpc("incrementar_visita_hoy").then(({ error }) => {
+      if (error) console.error("No se pudo registrar la visita:", error);
+    });
+  }
+
+
+  /* =========================
+     INICIAR
+  ========================= */
+
+  loadProducts();
+
+</script>
+</body>
+</html>

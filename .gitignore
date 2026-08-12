@@ -1,0 +1,6 @@
+# Credenciales reales de Supabase — usa config.example.js como plantilla
+config.js
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db

@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lunara — Administración</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css"><link rel="icon" href="icono.png">
+</head>
+<body>
+<div id="loginView" class="login-wrap">
+  <form id="loginForm" class="login">
+    <p class="eyebrow">Lunara</p><h1>Panel de administración</h1>
+    <div id="loginMessage" class="message hidden"></div>
+    <div class="field"><label>Correo</label><input id="email" type="email" required autocomplete="username"></div>
+    <div class="field"><label>Contraseña</label><input id="password" type="password" required autocomplete="current-password"></div>
+    <button class="primary" style="width:100%" type="submit">Entrar</button>
+    <a href="index.html" class="btn" style="width:100%;display:block;text-align:center;margin-top:10px;box-sizing:border-box">Salir</a>
+  </form>
+</div>
+
+<div id="appView" class="admin-shell hidden">
+  <aside class="sidebar">
+    <div><div class="brand">LUNARA</div><div class="brand-sub">ADMINISTRACIÓN</div></div>
+    <nav class="side-nav">
+      <button class="active" data-section="dashboard">Resumen</button>
+      <button data-section="products">Productos</button>
+      <button data-section="stats">Estadísticas</button>
+    </nav>
+    <button id="logoutBtn" class="logout">Cerrar sesión</button>
+  </aside>
+
+  <main class="main">
+    <section id="dashboard" class="section active">
+      <div class="topbar"><div><p class="eyebrow">Administración</p><h1>Resumen</h1></div><button class="primary" id="newFromDash">+ Nuevo producto</button></div>
+      <div class="stats">
+        <div class="stat"><span class="eyebrow">Productos</span><strong id="statProducts">0</strong></div>
+        <div class="stat"><span class="eyebrow">Categorías</span><strong id="statCategories">0</strong></div>
+        <div class="stat"><span class="eyebrow">Último producto</span><strong id="statLatest" style="font-size:20px">—</strong></div>
+      </div>
+      <div class="panel"><div class="panel-head"><h2>Últimos productos</h2><button class="btn" id="goProducts">Ver todos</button></div><div id="recentList" class="product-list"></div></div>
+    </section>
+
+    <section id="products" class="section">
+      <div class="topbar"><div><p class="eyebrow">Catálogo</p><h1>Productos</h1></div><button class="primary" id="newProductBtn">+ Nuevo producto</button></div>
+      <div class="panel">
+        <div class="toolbar"><input id="productSearch" placeholder="Buscar producto..."></div>
+        <div id="productList" class="product-list"></div>
+      </div>
+    </section>
+
+    <section id="stats" class="section">
+      <div class="topbar"><div><p class="eyebrow">Administración</p><h1>Estadísticas de visitas</h1></div></div>
+      <div class="stats">
+        <div class="stat"><span class="eyebrow">Hoy</span><strong id="statVisitasHoy">0</strong></div>
+        <div class="stat"><span class="eyebrow">Esta semana</span><strong id="statVisitasSemana">0</strong></div>
+        <div class="stat"><span class="eyebrow">Este mes</span><strong id="statVisitasMes">0</strong></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h2>Últimos 30 días</h2></div>
+        <div id="visitasChart" style="display:flex;align-items:flex-end;gap:3px;height:160px;padding-top:10px"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="modal" class="hidden" style="position:fixed;inset:0;background:rgba(20,16,13,.55);display:grid;place-items:center;padding:18px;z-index:20">
+  <form id="productForm" class="panel" style="width:min(680px,100%);max-height:94vh;overflow:auto">
+    <div class="panel-head"><h2 id="formTitle">Nuevo producto</h2><button type="button" class="btn" id="closeModal">Cerrar</button></div>
+    <div id="formMessage" class="message hidden"></div>
+    <div class="form-grid">
+      <div class="field"><label>Nombre</label><input id="pName" required maxlength="120"></div>
+      <div class="field"><label>Precio (COP)</label><input id="pPrice" type="number" min="1" step="1" required></div>
+      <div class="field full"><label>Categoría</label><input id="pCategory" required maxlength="80" placeholder="Ej. Vestidos"></div>
+      <div class="field full">
+        <label>Foto principal</label>
+        <label class="drop" for="pImage"><span id="dropText">Selecciona una imagen desde tu celular o computador</span><input id="pImage" type="file" accept="image/jpeg,image/png,image/webp"></label>
+        <div class="preview-wrap">
+          <img id="preview" class="preview" alt="Vista previa">
+          <button type="button" class="btn danger remove-photo hidden" id="removePhotoBtn">Quitar foto</button>
+        </div>
+        <small style="color:#756c64">JPG, PNG o WEBP. La imagen se guardará en el almacenamiento de Lunara. El producto siempre necesita una foto principal.</small>
+      </div>
+      <div class="field full">
+        <label>Foto secundaria (opcional)</label>
+        <label class="drop" for="pImage2"><span id="dropText2">Selecciona una segunda imagen (opcional)</span><input id="pImage2" type="file" accept="image/jpeg,image/png,image/webp"></label>
+        <div class="preview-wrap">
+          <img id="preview2" class="preview" alt="Vista previa 2">
+          <button type="button" class="btn danger remove-photo hidden" id="removePhoto2Btn">Quitar foto</button>
+        </div>
+        <small style="color:#756c64">Si la agregas, el cliente podrá tocar la foto en la tienda para ver esta segunda imagen.</small>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:8px"><button type="button" class="btn" id="cancelBtn">Cancelar</button><button class="primary" id="saveBtn" type="submit">Guardar producto</button></div>
+  </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+
+<script>
+const cfg = window.LUNARA_CONFIG;
+
+const configured =
+    cfg &&
+    !cfg.SUPABASE_URL.includes("PEGA_AQUI") &&
+    !cfg.SUPABASE_ANON_KEY.includes("PEGA_AQUI");
+
+const sb = configured
+    ? window.supabase.createClient(
+        cfg.SUPABASE_URL,
+        cfg.SUPABASE_ANON_KEY
+      )
+    : null;
+
+let products = [];
+let editingId = null;
+let editingImageUrl = null;
+let editingImageUrl2 = null;
+let originalImageUrl = null;
+let originalImageUrl2 = null;
+
+const $ = id => document.getElementById(id);
+
+function message(el, text, show = true) {
+    el.textContent = text;
+    el.classList.toggle("hidden", !show);
+}
+
+function escapeHTML(v) {
+    return String(v ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function money(v) {
+    return `$${Number(v).toLocaleString("es-CO")}`;
+}
+
+
+/* =========================
+   INICIO
+========================= */
+
+async function init() {
+
+    if (!sb) {
+        message(
+            $("loginMessage"),
+            "Configura config.js con las credenciales de Supabase antes de usar el panel."
+        );
+        return;
+    }
+
+    const {
+        data: { session }
+    } = await sb.auth.getSession();
+
+    if (session) {
+        showApp();
+    } else {
+        $("loginView").classList.remove("hidden");
+    }
+
+    sb.auth.onAuthStateChange((_event, session) => {
+        session ? showApp() : showLogin();
+    });
+}
+
+
+function showApp() {
+    $("loginView").classList.add("hidden");
+    $("appView").classList.remove("hidden");
+    loadProducts();
+    startInactivityWatch();
+}
+
+
+function showLogin() {
+    $("appView").classList.add("hidden");
+    $("loginView").classList.remove("hidden");
+    stopInactivityWatch();
+}
+
+
+/* =========================
+   CIERRE POR INACTIVIDAD
+   (el plan gratuito de Supabase no
+   incluye esta función en su panel,
+   así que se controla aquí)
+========================= */
+
+const INACTIVITY_LIMIT_MS = 15 * 60 * 1000; // 15 minutos sin actividad
+let inactivityTimer = null;
+
+const ACTIVITY_EVENTS = ["mousemove", "keydown", "click", "scroll", "touchstart"];
+
+function resetInactivityTimer() {
+    clearTimeout(inactivityTimer);
+    inactivityTimer = setTimeout(async () => {
+        await sb.auth.signOut();
+        alert("Tu sesión se cerró automáticamente por inactividad.");
+    }, INACTIVITY_LIMIT_MS);
+}
+
+function startInactivityWatch() {
+    resetInactivityTimer();
+    ACTIVITY_EVENTS.forEach(evt =>
+        document.addEventListener(evt, resetInactivityTimer)
+    );
+}
+
+function stopInactivityWatch() {
+    clearTimeout(inactivityTimer);
+    ACTIVITY_EVENTS.forEach(evt =>
+        document.removeEventListener(evt, resetInactivityTimer)
+    );
+}
+
+
+/* =========================
+   CARGAR PRODUCTOS
+========================= */
+
+async function loadProducts() {
+
+    const { data, error } = await sb
+        .from("Productos")
+        .select("id,nombre,precio,categoria,foto_url,foto_url_2")
+        .order("id", { ascending: false });
+
+    if (error) {
+        console.error(error);
+        message(
+            $("formMessage"),
+            "No se pudieron cargar los productos."
+        );
+        return;
+    }
+
+    products = data || [];
+
+    renderAll();
+}
+
+
+/* =========================
+   ESTADÍSTICAS DE VISITAS
+========================= */
+
+async function loadStats() {
+
+    const hoy = new Date();
+    const hace30 = new Date(hoy);
+    hace30.setDate(hoy.getDate() - 29);
+
+    const fechaISO = d => d.toISOString().slice(0, 10);
+
+    const { data, error } = await sb
+        .from("visitas_diarias")
+        .select("fecha,visitas")
+        .gte("fecha", fechaISO(hace30))
+        .lte("fecha", fechaISO(hoy))
+        .order("fecha", { ascending: true });
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    const porFecha = {};
+    (data || []).forEach(row => {
+        porFecha[row.fecha] = row.visitas;
+    });
+
+    // Armamos los últimos 30 días completos, con 0 en los días sin visitas
+    const dias = [];
+    for (let i = 0; i < 30; i++) {
+        const d = new Date(hace30);
+        d.setDate(hace30.getDate() + i);
+        const iso = fechaISO(d);
+        dias.push({ fecha: iso, visitas: porFecha[iso] || 0 });
+    }
+
+    // Hoy
+    $("statVisitasHoy").textContent = porFecha[fechaISO(hoy)] || 0;
+
+    // Esta semana (últimos 7 días incluyendo hoy)
+    const semana = dias.slice(-7).reduce((sum, d) => sum + d.visitas, 0);
+    $("statVisitasSemana").textContent = semana;
+
+    // Este mes (desde el día 1 del mes actual)
+    const primerDiaMes = fechaISO(new Date(hoy.getFullYear(), hoy.getMonth(), 1));
+    const mes = Object.entries(porFecha)
+        .filter(([fecha]) => fecha >= primerDiaMes)
+        .reduce((sum, [, v]) => sum + v, 0);
+    $("statVisitasMes").textContent = mes;
+
+    // Gráfico simple de barras (CSS, sin librerías)
+    const max = Math.max(1, ...dias.map(d => d.visitas));
+    $("visitasChart").innerHTML = dias.map(d => `
+        <div title="${d.fecha}: ${d.visitas} visitas"
+             style="flex:1;min-width:4px;background:var(--lilac-deep);border-radius:3px 3px 0 0;
+                    height:${Math.max(3, (d.visitas / max) * 100)}%">
+        </div>
+    `).join("");
+}
+
+
+/* =========================
+   RENDERIZADO
+========================= */
+
+function renderAll() {
+
+    $("statProducts").textContent = products.length;
+
+    $("statCategories").textContent =
+        new Set(
+            products.map(p => p.categoria).filter(Boolean)
+        ).size;
+
+    $("statLatest").textContent =
+        products[0]?.nombre || "—";
+
+    renderList(
+        $("recentList"),
+        products.slice(0, 5)
+    );
+
+    renderList(
+        $("productList"),
+        filterProducts()
+    );
+}
+
+
+/* =========================
+   BUSCAR
+========================= */
+
+function filterProducts() {
+
+    const q = $("productSearch")
+        .value
+        .trim()
+        .toLowerCase();
+
+    return products.filter(p => {
+
+        const nombre = String(p.nombre || "").toLowerCase();
+        const categoria = String(p.categoria || "").toLowerCase();
+
+        return !q ||
+            nombre.includes(q) ||
+            categoria.includes(q);
+    });
+}
+
+
+/* =========================
+   MOSTRAR LISTA
+========================= */
+
+function renderList(el, list) {
+
+    if (!list.length) {
+
+        el.innerHTML =
+            '<div class="empty">No hay productos registrados.</div>';
+
+        return;
+    }
+
+    el.innerHTML = list.map(p => `
+        <div class="product-row">
+
+            <img
+                class="thumb"
+                src="${escapeHTML(p.foto_url)}"
+                alt=""
+            >
+
+            <div>
+                <div class="product-name">
+                    ${escapeHTML(p.nombre)}
+                </div>
+
+                <div class="product-meta">
+                    ${escapeHTML(p.categoria)}
+                    ·
+                    ${money(p.precio)}
+                </div>
+            </div>
+
+            <div class="actions">
+
+                <button
+                    class="btn"
+                    onclick="editProduct('${p.id}')"
+                >
+                    Editar
+                </button>
+
+                <button
+                    class="btn danger"
+                    onclick="deleteProduct('${p.id}')"
+                >
+                    Eliminar
+                </button>
+
+            </div>
+
+        </div>
+    `).join("");
+}
+
+
+/* =========================
+   CAMBIAR SECCIÓN
+========================= */
+
+function switchSection(name) {
+
+    document
+        .querySelectorAll(".section")
+        .forEach(s => s.classList.remove("active"));
+
+    $(name).classList.add("active");
+
+    document
+        .querySelectorAll(".side-nav button")
+        .forEach(b =>
+            b.classList.toggle(
+                "active",
+                b.dataset.section === name
+            )
+        );
+}
+
+
+/* =========================
+   ABRIR MODAL
+========================= */
+
+function openModal(product = null) {
+
+    editingId = product?.id || null;
+
+    editingImageUrl =
+        product?.foto_url || null;
+
+    editingImageUrl2 =
+        product?.foto_url_2 || null;
+
+    // Guardamos aparte cuáles eran las fotos originales al abrir
+    // el modal, para saber después qué borrar del Storage.
+    originalImageUrl = editingImageUrl;
+    originalImageUrl2 = editingImageUrl2;
+
+    $("formTitle").textContent =
+        product
+            ? "Editar producto"
+            : "Nuevo producto";
+
+    $("pName").value =
+        product?.nombre || "";
+
+    $("pPrice").value =
+        product?.precio || "";
+
+    $("pCategory").value =
+        product?.categoria || "";
+
+    $("pImage").value = "";
+    $("pImage2").value = "";
+
+    $("dropText").textContent =
+        product
+            ? "Selecciona una nueva imagen (opcional)"
+            : "Selecciona una imagen desde tu celular o computador";
+
+    $("dropText2").textContent =
+        product?.foto_url_2
+            ? "Selecciona una nueva imagen (opcional)"
+            : "Selecciona una segunda imagen (opcional)";
+
+    $("preview").src =
+        product?.foto_url || "";
+
+    $("preview").style.display =
+        product?.foto_url
+            ? "block"
+            : "none";
+
+    $("preview2").src =
+        product?.foto_url_2 || "";
+
+    $("preview2").style.display =
+        product?.foto_url_2
+            ? "block"
+            : "none";
+
+    $("removePhotoBtn").classList.toggle("hidden", !editingImageUrl);
+    $("removePhoto2Btn").classList.toggle("hidden", !editingImageUrl2);
+
+    message(
+        $("formMessage"),
+        "",
+        false
+    );
+
+    $("modal").classList.remove("hidden");
+
+    $("modal").style.display = "grid";
+}
+
+
+function closeModal() {
+
+    $("modal").classList.add("hidden");
+
+    $("modal").style.display = "none";
+}
+
+
+/* =========================
+   EDITAR
+========================= */
+
+window.editProduct = id => {
+
+    const product =
+        products.find(p => p.id === id);
+
+    if (product) {
+        openModal(product);
+    }
+};
+
+
+/* =========================
+   ELIMINAR
+========================= */
+
+window.deleteProduct = async id => {
+
+    const product =
+        products.find(p => p.id === id);
+
+    if (
+        !product ||
+        !confirm(
+            `¿Eliminar "${product.nombre}"?`
+        )
+    ) {
+        return;
+    }
+
+    const { error } = await sb
+        .from("Productos")
+        .delete()
+        .eq("id", id);
+
+    if (!error) {
+        await deleteImageFromStorage(product.foto_url);
+        await deleteImageFromStorage(product.foto_url_2);
+    }
+
+    if (error) {
+
+        alert(
+            "No se pudo eliminar: " +
+            error.message
+        );
+
+        return;
+    }
+
+    await loadProducts();
+};
+
+
+/* =========================
+   COMPRIMIR IMAGEN
+   (reduce tamaño y peso antes
+   de subirla, para que la tienda
+   cargue rápido y el plan gratuito
+   de Storage rinda más)
+========================= */
+
+const MAX_IMAGE_DIMENSION = 1600; // px, lado más largo
+const IMAGE_QUALITY = 0.82;       // calidad JPEG/WEBP (0-1)
+
+function loadImageFromFile(file) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+
+        img.onload = () => {
+            URL.revokeObjectURL(url);
+            resolve(img);
+        };
+
+        img.onerror = () => {
+            URL.revokeObjectURL(url);
+            reject(new Error("No se pudo leer la imagen."));
+        };
+
+        img.src = url;
+    });
+}
+
+async function compressImage(file) {
+
+    // Los GIF no se recomprimen (podría romper animaciones); se suben tal cual.
+    if (file.type === "image/gif") {
+        return file;
+    }
+
+    try {
+
+        const img = await loadImageFromFile(file);
+
+        let { width, height } = img;
+
+        if (width > MAX_IMAGE_DIMENSION || height > MAX_IMAGE_DIMENSION) {
+            if (width >= height) {
+                height = Math.round(height * (MAX_IMAGE_DIMENSION / width));
+                width = MAX_IMAGE_DIMENSION;
+            } else {
+                width = Math.round(width * (MAX_IMAGE_DIMENSION / height));
+                height = MAX_IMAGE_DIMENSION;
+            }
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const outputType =
+            file.type === "image/png" ? "image/png" : "image/jpeg";
+
+        const blob = await new Promise(resolve =>
+            canvas.toBlob(resolve, outputType, IMAGE_QUALITY)
+        );
+
+        if (!blob) {
+            return file;
+        }
+
+        // Si por alguna razón la "compresión" queda más pesada
+        // que el original, mejor nos quedamos con el original.
+        if (blob.size >= file.size) {
+            return file;
+        }
+
+        const newName =
+            file.name.replace(/\.\w+$/, "") +
+            (outputType === "image/png" ? ".png" : ".jpg");
+
+        return new File([blob], newName, { type: outputType });
+
+    } catch (err) {
+        console.warn("No se pudo comprimir la imagen, se sube el original:", err);
+        return file;
+    }
+}
+
+
+/* =========================
+   BORRAR IMAGEN DEL STORAGE
+   (evita archivos huérfanos
+   cuando se reemplaza o elimina
+   un producto)
+========================= */
+
+function storagePathFromUrl(url) {
+
+    if (!url) return null;
+
+    const marker = "/Productos/";
+    const idx = url.indexOf(marker);
+
+    if (idx === -1) return null;
+
+    return decodeURIComponent(
+        url.slice(idx + marker.length).split("?")[0]
+    );
+}
+
+async function deleteImageFromStorage(url) {
+
+    const path = storagePathFromUrl(url);
+
+    if (!path) return;
+
+    const { error } =
+        await sb.storage
+            .from("Productos")
+            .remove([path]);
+
+    if (error) {
+        // No bloqueamos el flujo principal por esto,
+        // solo lo dejamos en consola.
+        console.warn("No se pudo borrar la imagen anterior:", error);
+    }
+}
+
+
+/* =========================
+   SUBIR IMAGEN
+========================= */
+
+async function uploadImage(file, fallbackUrl) {
+
+    if (!file) {
+        return fallbackUrl;
+    }
+
+    const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+    ];
+
+    if (!allowedTypes.includes(file.type)) {
+        throw new Error(
+            "Solo se permiten imágenes JPG, PNG o WEBP."
+        );
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+        throw new Error(
+            "La imagen no puede superar 5 MB."
+        );
+    }
+
+    const finalFile = await compressImage(file);
+
+    const ext =
+        (finalFile.name.split(".").pop() || "jpg")
+        .toLowerCase();
+
+    const path =
+        `${crypto.randomUUID()}.${ext}`;
+
+    const { error } =
+        await sb.storage
+            .from("Productos")
+            .upload(
+                path,
+                finalFile,
+                {
+                    upsert: false,
+                    contentType: finalFile.type
+                }
+            );
+
+    if (error) {
+        throw error;
+    }
+
+    const { data } =
+        sb.storage
+            .from("Productos")
+            .getPublicUrl(path);
+
+    return data.publicUrl;
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+$("loginForm").addEventListener(
+    "submit",
+    async e => {
+
+        e.preventDefault();
+
+        if (!sb) return;
+
+        message(
+            $("loginMessage"),
+            "Iniciando sesión..."
+        );
+
+        const { error } =
+            await sb.auth.signInWithPassword({
+                email:
+                    $("email")
+                        .value
+                        .trim(),
+
+                password:
+                    $("password").value
+            });
+
+        if (error) {
+
+            message(
+                $("loginMessage"),
+                "No se pudo iniciar sesión. Verifica correo y contraseña."
+            );
+        }
+    }
+);
+
+
+/* =========================
+   BOTONES
+========================= */
+
+$("logoutBtn").onclick =
+    () => sb.auth.signOut();
+
+$("newProductBtn").onclick =
+    () => openModal();
+
+$("newFromDash").onclick =
+    () => {
+        switchSection("products");
+        openModal();
+    };
+
+$("goProducts").onclick =
+    () => switchSection("products");
+
+document
+    .querySelectorAll(".side-nav button")
+    .forEach(b => {
+
+        b.onclick =
+            () => {
+                switchSection(b.dataset.section);
+                if (b.dataset.section === "stats") {
+                    loadStats();
+                }
+            };
+    });
+
+
+/* =========================
+   BUSCADOR
+========================= */
+
+$("productSearch").oninput =
+    () =>
+        renderList(
+            $("productList"),
+            filterProducts()
+        );
+
+
+/* =========================
+   CERRAR MODAL
+========================= */
+
+$("closeModal").onclick =
+    $("cancelBtn").onclick =
+    closeModal;
+
+
+/* =========================
+   PREVISUALIZACIÓN IMAGEN
+========================= */
+
+$("pImage").onchange = e => {
+
+    const file =
+        e.target.files[0];
+
+    if (!file) return;
+
+    $("dropText").textContent =
+        file.name;
+
+    $("preview").src =
+        URL.createObjectURL(file);
+
+    $("preview").style.display =
+        "block";
+
+    $("removePhotoBtn").classList.remove("hidden");
+};
+
+$("pImage2").onchange = e => {
+
+    const file =
+        e.target.files[0];
+
+    if (!file) return;
+
+    $("dropText2").textContent =
+        file.name;
+
+    $("preview2").src =
+        URL.createObjectURL(file);
+
+    $("preview2").style.display =
+        "block";
+
+    $("removePhoto2Btn").classList.remove("hidden");
+};
+
+
+/* =========================
+   QUITAR FOTO
+========================= */
+
+$("removePhotoBtn").onclick = () => {
+
+    $("pImage").value = "";
+    editingImageUrl = null;
+
+    $("preview").src = "";
+    $("preview").style.display = "none";
+
+    $("dropText").textContent =
+        "Selecciona una imagen desde tu celular o computador";
+
+    $("removePhotoBtn").classList.add("hidden");
+};
+
+$("removePhoto2Btn").onclick = () => {
+
+    $("pImage2").value = "";
+    editingImageUrl2 = null;
+
+    $("preview2").src = "";
+    $("preview2").style.display = "none";
+
+    $("dropText2").textContent =
+        "Selecciona una segunda imagen (opcional)";
+
+    $("removePhoto2Btn").classList.add("hidden");
+};
+
+
+/* =========================
+   GUARDAR / EDITAR PRODUCTO
+========================= */
+
+$("productForm").addEventListener(
+    "submit",
+    async e => {
+
+        e.preventDefault();
+
+        const btn =
+            $("saveBtn");
+
+        btn.disabled = true;
+
+        btn.textContent =
+            "Guardando...";
+
+        // Guardamos las URLs nuevas para poder limpiarlas si algo
+        // falla después de subirlas (por ejemplo, si falla la segunda
+        // imagen o la actualización de la base de datos).
+        let newImageUrl = null;
+        let newImageUrl2 = null;
+
+        try {
+
+            const imageUrl =
+                await uploadImage(
+                    $("pImage").files[0],
+                    editingImageUrl
+                );
+
+            if (!imageUrl) {
+                throw new Error(
+                    "Selecciona una foto."
+                );
+            }
+
+            if (imageUrl !== editingImageUrl) {
+                newImageUrl = imageUrl;
+            }
+
+            const imageUrl2 =
+                await uploadImage(
+                    $("pImage2").files[0],
+                    editingImageUrl2
+                );
+
+            if (imageUrl2 && imageUrl2 !== editingImageUrl2) {
+                newImageUrl2 = imageUrl2;
+            }
+
+            const payload = {
+
+                nombre:
+                    $("pName")
+                        .value
+                        .trim(),
+
+                precio:
+                    Number(
+                        $("pPrice").value
+                    ),
+
+                categoria:
+                    $("pCategory")
+                        .value
+                        .trim(),
+
+                foto_url:
+                    imageUrl,
+
+                foto_url_2:
+                    imageUrl2 || null
+            };
+
+
+            if (
+                !payload.nombre ||
+                !payload.categoria ||
+                !Number.isFinite(
+                    payload.precio
+                ) ||
+                payload.precio <= 0
+            ) {
+
+                throw new Error(
+                    "Completa nombre, categoría y un precio mayor que $0."
+                );
+            }
+
+
+            const result =
+                editingId
+
+                ? await sb
+                    .from("Productos")
+                    .update(payload)
+                    .eq(
+                        "id",
+                        editingId
+                    )
+
+                : await sb
+                    .from("Productos")
+                    .insert(payload);
+
+
+            if (result.error) {
+                throw result.error;
+            }
+
+
+            // La base de datos ya apunta a las nuevas fotos.
+            // Ahora sí es seguro eliminar las originales que dejaron
+            // de utilizarse, incluyendo cualquiera que haya sido quitada.
+            if (originalImageUrl && originalImageUrl !== imageUrl) {
+                await deleteImageFromStorage(originalImageUrl);
+            }
+
+            if (originalImageUrl2 && originalImageUrl2 !== imageUrl2) {
+                await deleteImageFromStorage(originalImageUrl2);
+            }
+
+            closeModal();
+
+            await loadProducts();
+
+
+        } catch (err) {
+
+            // Si ya se subieron fotos nuevas pero el guardado no terminó,
+            // las eliminamos para no dejar archivos huérfanos en Storage.
+            if (newImageUrl) {
+                await deleteImageFromStorage(newImageUrl);
+            }
+
+            if (newImageUrl2) {
+                await deleteImageFromStorage(newImageUrl2);
+            }
+
+            message(
+                $("formMessage"),
+                err.message ||
+                "No se pudo guardar el producto."
+            );
+
+
+        } finally {
+
+            btn.disabled = false;
+
+            btn.textContent =
+                "Guardar producto";
+        }
+    }
+);
+
+
+init();
+
+</script>
+</body></html>
