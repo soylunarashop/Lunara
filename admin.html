@@ -733,173 +733,229 @@
 
     async function loadStats() {
 
-      const hoy = new Date();
+  // Fecha y hora actual de Colombia
+  const ahora = new Date();
 
-      const hace30 = new Date(hoy);
+  const partesColombia = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Bogota",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).formatToParts(ahora);
 
-      hace30.setDate(
-        hoy.getDate() - 29
-      );
+  const year = Number(
+    partesColombia.find(p => p.type === "year").value
+  );
 
+  const month = Number(
+    partesColombia.find(p => p.type === "month").value
+  );
 
-      const fechaISO = d =>
-        d.toISOString().slice(0, 10);
-
-
-      const {
-        data,
-        error
-      } = await sb
-        .from("visitas_diarias")
-        .select(
-          "fecha,visitas"
-        )
-        .gte(
-          "fecha",
-          fechaISO(hace30)
-        )
-        .lte(
-          "fecha",
-          fechaISO(hoy)
-        )
-        .order(
-          "fecha",
-          {
-            ascending: true
-          }
-        );
+  const day = Number(
+    partesColombia.find(p => p.type === "day").value
+  );
 
 
-      if (error) {
+  // Creamos una fecha basada en el calendario de Colombia
+  const hoy = new Date(
+    year,
+    month - 1,
+    day
+  );
 
-        console.error(error);
 
-        return;
+  // Últimos 30 días
+  const hace30 = new Date(hoy);
+
+  hace30.setDate(
+    hoy.getDate() - 29
+  );
+
+
+  // Formato YYYY-MM-DD sin utilizar UTC
+  const fechaLocal = d => {
+
+    const y = d.getFullYear();
+
+    const m = String(
+      d.getMonth() + 1
+    ).padStart(2, "0");
+
+    const day = String(
+      d.getDate()
+    ).padStart(2, "0");
+
+    return `${y}-${m}-${day}`;
+  };
+
+
+  const fechaHoy = fechaLocal(hoy);
+  const fechaHace30 = fechaLocal(hace30);
+
+
+  const {
+    data,
+    error
+  } = await sb
+    .from("visitas_diarias")
+    .select(
+      "fecha,visitas"
+    )
+    .gte(
+      "fecha",
+      fechaHace30
+    )
+    .lte(
+      "fecha",
+      fechaHoy
+    )
+    .order(
+      "fecha",
+      {
+        ascending: true
       }
+    );
 
 
-      const porFecha = {};
+  if (error) {
+
+    console.error(error);
+
+    return;
+  }
 
 
-      (data || []).forEach(
-        row => {
-
-          porFecha[row.fecha] =
-            row.visitas;
-
-        }
-      );
+  const porFecha = {};
 
 
-      const dias = [];
+  (data || []).forEach(
+    row => {
 
-
-      for (
-        let i = 0;
-        i < 30;
-        i++
-      ) {
-
-        const d =
-          new Date(hace30);
-
-        d.setDate(
-          hace30.getDate() + i
-        );
-
-
-        const iso =
-          fechaISO(d);
-
-
-        dias.push({
-          fecha: iso,
-          visitas:
-            porFecha[iso] || 0
-        });
-
-      }
-
-
-      $("statVisitasHoy").textContent =
-        porFecha[
-          fechaISO(hoy)
-        ] || 0;
-
-
-      const semana =
-        dias
-          .slice(-7)
-          .reduce(
-            (sum, d) =>
-              sum + d.visitas,
-            0
-          );
-
-
-      $("statVisitasSemana").textContent =
-        semana;
-
-
-      const primerDiaMes =
-        fechaISO(
-          new Date(
-            hoy.getFullYear(),
-            hoy.getMonth(),
-            1
-          )
-        );
-
-
-      const mes =
-        Object.entries(porFecha)
-          .filter(
-            ([fecha]) =>
-              fecha >= primerDiaMes
-          )
-          .reduce(
-            (sum, [, v]) =>
-              sum + v,
-            0
-          );
-
-
-      $("statVisitasMes").textContent =
-        mes;
-
-
-      const max =
-        Math.max(
-          1,
-          ...dias.map(
-            d => d.visitas
-          )
-        );
-
-
-      $("visitasChart").innerHTML =
-        dias.map(
-          d => `
-
-            <div
-              title="${d.fecha}: ${d.visitas} visitas"
-              style="
-                flex:1;
-                min-width:4px;
-                background:var(--lilac-deep);
-                border-radius:3px 3px 0 0;
-                height:${Math.max(
-                  3,
-                  (d.visitas / max) * 100
-                )}%;
-              "
-            ></div>
-
-          `
-        ).join("");
+      porFecha[row.fecha] =
+        row.visitas;
 
     }
+  );
 
+
+  // Construir los últimos 30 días
+  const dias = [];
+
+
+  for (
+    let i = 0;
+    i < 30;
+    i++
+  ) {
+
+    const d =
+      new Date(hace30);
+
+    d.setDate(
+      hace30.getDate() + i
+    );
+
+
+    const iso =
+      fechaLocal(d);
+
+
+    dias.push({
+      fecha: iso,
+      visitas:
+        porFecha[iso] || 0
+    });
+
+  }
+
+
+  // =========================
+  // HOY
+  // =========================
+
+  $("statVisitasHoy").textContent =
+    porFecha[fechaHoy] || 0;
+
+
+  // =========================
+  // ESTA SEMANA
+  // =========================
+
+  const semana =
+    dias
+      .slice(-7)
+      .reduce(
+        (sum, d) =>
+          sum + d.visitas,
+        0
+      );
+
+
+  $("statVisitasSemana").textContent =
+    semana;
+
+
+  // =========================
+  // ESTE MES
+  // =========================
+
+  const primerDiaMes =
+    `${year}-${String(month).padStart(2, "0")}-01`;
+
+
+  const mes =
+    Object.entries(porFecha)
+      .filter(
+        ([fecha]) =>
+          fecha >= primerDiaMes &&
+          fecha <= fechaHoy
+      )
+      .reduce(
+        (sum, [, v]) =>
+          sum + v,
+        0
+      );
+
+
+  $("statVisitasMes").textContent =
+    mes;
+
+
+  // =========================
+  // GRÁFICO
+  // =========================
+
+  const max =
+    Math.max(
+      1,
+      ...dias.map(
+        d => d.visitas
+      )
+    );
+
+
+  $("visitasChart").innerHTML =
+    dias.map(
+      d => `
+
+        <div
+          title="${d.fecha}: ${d.visitas} visitas"
+          style="
+            flex:1;
+            min-width:4px;
+            background:var(--lilac-deep);
+            border-radius:3px 3px 0 0;
+            height:${Math.max(
+              3,
+              (d.visitas / max) * 100
+            )}%;
+          "
+        ></div>
+
+      `
+    ).join("");
+
+}
 
     /* =========================
        RENDERIZADO
