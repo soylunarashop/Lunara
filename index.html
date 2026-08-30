@@ -107,7 +107,7 @@
   <section class="reviews" id="resenas">
     <div class="section-head">
       <p class="section-eyebrow" id="txt-reviews-eyebrow">Lo que dicen de nosotras</p>
-      <h2 class="section-title" id="txt-reviews-title">Reseñas de clientas</h2>
+      <h2 class="section-title" id="txt-reviews-title">Reseñas de clientes</h2>
     </div>
 
     <div class="reviews-grid" id="reviews-grid"></div>
@@ -499,7 +499,7 @@
 
     if (!supabaseClient) {
       grid.innerHTML =
-        `<p class="empty-state">Muy pronto compartiremos aquí las reseñas de nuestras clientas.</p>`;
+        `<p class="empty-state">Muy pronto compartiremos aquí las reseñas de nuestros clientes.</p>`;
       return;
     }
 
@@ -521,7 +521,7 @@
 
       if (!REVIEWS.length) {
         grid.innerHTML =
-          `<p class="empty-state">Muy pronto compartiremos aquí las reseñas de nuestras clientas.</p>`;
+          `<p class="empty-state">Muy pronto compartiremos aquí las reseñas de nuestros clientes.</p>`;
         return;
       }
 
