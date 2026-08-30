@@ -31,16 +31,46 @@
 
   <nav class="nav">
     <span class="nav-mark">LUNARA</span>
-    <a class="nav-link" href="#pedir">Ver catalogo</a>
+    <button
+      class="hamburger"
+      id="menuToggle"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="mobileMenu"
+    >
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- OVERLAY DEL MENÚ -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+
+  <!-- MENÚ HAMBURGUESA (CATEGORÍAS) -->
+  <aside class="mobile-menu" id="mobileMenu" aria-hidden="true">
+
+    <div class="mobile-menu-head">
+      <span class="nav-mark">LUNARA</span>
+      <button class="menu-close" id="menuClose" aria-label="Cerrar menú">✕</button>
+    </div>
+
+    <p class="menu-label">Categorías</p>
+
+    <nav class="menu-categories" id="menuCategories"></nav>
+
+    <a class="btn-wa menu-wa" id="cta-menu" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.3 2 11.6c0 1.9.6 3.7 1.6 5.2L2 22l5.4-1.4c1.5.8 3.1 1.2 4.6 1.2 5.5 0 10-4.3 10-9.6S17.5 2 12 2zm0 17.4c-1.4 0-2.8-.4-4-1.1l-.3-.2-3.2.8.9-3.1-.2-.3c-.8-1.3-1.3-2.7-1.3-4.3 0-4.3 3.6-7.8 8-7.8s8 3.5 8 7.8-3.6 8-8 8zm4.4-5.8c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.7 1-.1.2-.3.2-.5.1-1.3-.6-2.2-1.2-3-2.6-.2-.4.2-.4.6-1.2.1-.1 0-.3 0-.4-.1-.1-.5-1.3-.7-1.8-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c.1.1 1.6 2.5 4 3.5.6.2 1 .4 1.4.5.6.2 1.1.1 1.5-.1.5-.2 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.1-.2-.1-.4-.2z"/></svg>
+      Escríbenos por WhatsApp
+    </a>
+
+  </aside>
 
   <!-- HERO -->
   <header class="hero">
     <div class="hero-content">
       <img class="hero-img" src="icono.png" alt="Lunara" loading="lazy">
-      <p class="hero-eyebrow">Nueva colección</p>
-      <h1 class="hero-title">Lunara</h1>
-      <p class="hero-sub">Moda, belleza y estilo para ti.</p>
+      <p class="hero-eyebrow" id="txt-hero-eyebrow">Nueva colección</p>
+      <h1 class="hero-title" id="txt-hero-title">Lunara</h1>
+      <p class="hero-sub" id="txt-hero-sub">Moda, belleza y estilo para ti.</p>
       <a class="btn-wa" id="cta-hero" href="#" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.3 2 11.6c0 1.9.6 3.7 1.6 5.2L2 22l5.4-1.4c1.5.8 3.1 1.2 4.6 1.2 5.5 0 10-4.3 10-9.6S17.5 2 12 2zm0 17.4c-1.4 0-2.8-.4-4-1.1l-.3-.2-3.2.8.9-3.1-.2-.3c-.8-1.3-1.3-2.7-1.3-4.3 0-4.3 3.6-7.8 8-7.8s8 3.5 8 7.8-3.6 8-8 8zm4.4-5.8c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.7 1-.1.2-.3.2-.5.1-1.3-.6-2.2-1.2-3-2.6-.2-.4.2-.4.6-1.2.1-.1 0-.3 0-.4-.1-.1-.5-1.3-.7-1.8-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c.1.1 1.6 2.5 4 3.5.6.2 1 .4 1.4.5.6.2 1.1.1 1.5-.1.5-.2 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.1-.2-.1-.4-.2z"/></svg>
         Escríbenos por WhatsApp
@@ -51,14 +81,11 @@
   <!-- COLLECTION -->
   <section class="collection" id="pedir">
     <div class="section-head">
-      <p class="section-eyebrow">Disponible ahora</p>
-      <h2 class="section-title">Colección Luna Creciente</h2>
+      <p class="section-eyebrow" id="txt-collection-eyebrow">Disponible ahora</p>
+      <h2 class="section-title" id="txt-collection-title">Colección Luna Creciente</h2>
     </div>
 
     <div class="filters">
-      <div class="tabs-wrap">
-        <div class="tabs" id="tabs"></div>
-      </div>
       <input class="search" id="search" type="text" placeholder="Buscar producto...">
     </div>
 
@@ -67,13 +94,23 @@
 
   <!-- STATEMENT -->
   <section class="statement">
-    <p>Moda, belleza, accesorios y detalles que te harán brillar.</p>
+    <p id="txt-statement">Moda, belleza, accesorios y detalles que te harán brillar.</p>
     <div class="phase-row">
       <div class="phase phase--crescent"></div>
       <div class="phase phase--half"></div>
       <div class="phase phase--gibbous"></div>
       <div class="phase phase--full"></div>
     </div>
+  </section>
+
+  <!-- RESEÑAS -->
+  <section class="reviews" id="resenas">
+    <div class="section-head">
+      <p class="section-eyebrow" id="txt-reviews-eyebrow">Lo que dicen de nosotras</p>
+      <h2 class="section-title" id="txt-reviews-title">Reseñas de clientas</h2>
+    </div>
+
+    <div class="reviews-grid" id="reviews-grid"></div>
   </section>
 
   <!-- FOOTER -->
@@ -133,6 +170,7 @@
   let PRODUCTS = [];
   let activeCategory = "Todos";
   let searchTerm = "";
+  let currentWaMessage = DEFAULT_MESSAGE;
 
   /* =========================
      CONFIGURACIÓN SUPABASE
@@ -274,7 +312,7 @@
 
 
   function showSetupError() {
-    document.getElementById("tabs").innerHTML = "";
+    document.getElementById("menuCategories").innerHTML = "";
 
     document.getElementById("product-grid").innerHTML =
       `<p class="empty-state">
@@ -285,7 +323,7 @@
 
 
   function showError() {
-    document.getElementById("tabs").innerHTML = "";
+    document.getElementById("menuCategories").innerHTML = "";
 
     document.getElementById("product-grid").innerHTML =
       `<p class="empty-state">
@@ -295,7 +333,7 @@
 
 
   function showEmptyCatalog() {
-    document.getElementById("tabs").innerHTML = "";
+    document.getElementById("menuCategories").innerHTML = "";
 
     document.getElementById("product-grid").innerHTML =
       `<p class="empty-state">
@@ -382,7 +420,165 @@
 
 
   /* =========================
-     CATEGORÍAS
+     TEXTOS / TÍTULOS EDITABLES
+     (se guardan desde el panel admin
+     en la tabla "Configuracion")
+  ========================= */
+
+  async function loadContent() {
+
+    if (!supabaseClient) return;
+
+    try {
+
+      const { data, error } = await supabaseClient
+        .from("Configuracion")
+        .select("clave,valor");
+
+      if (error) {
+        console.error("Error cargando Configuracion:", error);
+        return;
+      }
+
+      const textos = {};
+
+      (data || []).forEach(fila => {
+        textos[fila.clave] = fila.valor;
+      });
+
+      const aplicar = (id, clave) => {
+
+        const valor = textos[clave];
+
+        if (!valor) return;
+
+        const el = $(id);
+
+        if (el) el.textContent = valor;
+      };
+
+      aplicar("txt-hero-eyebrow", "hero_eyebrow");
+      aplicar("txt-hero-title", "hero_title");
+      aplicar("txt-hero-sub", "hero_sub");
+      aplicar("txt-collection-eyebrow", "collection_eyebrow");
+      aplicar("txt-collection-title", "collection_title");
+      aplicar("txt-statement", "statement_text");
+      aplicar("txt-reviews-eyebrow", "reviews_eyebrow");
+      aplicar("txt-reviews-title", "reviews_title");
+
+      if (textos.whatsapp_message) {
+
+        currentWaMessage = textos.whatsapp_message;
+
+        [ctaHero, ctaFooter, ctaFloat, ctaMenu].forEach(el => {
+          if (el) el.href = waLink(currentWaMessage);
+        });
+      }
+
+    } catch (error) {
+      console.error("Error inesperado cargando textos:", error);
+    }
+  }
+
+
+  /* =========================
+     RESEÑAS
+  ========================= */
+
+  let REVIEWS = [];
+
+  async function loadReviews() {
+
+    const grid =
+      document.getElementById("reviews-grid");
+
+    if (!grid) return;
+
+    grid.innerHTML =
+      `<p class="empty-state">Cargando reseñas...</p>`;
+
+    if (!supabaseClient) {
+      grid.innerHTML =
+        `<p class="empty-state">Muy pronto compartiremos aquí las reseñas de nuestras clientas.</p>`;
+      return;
+    }
+
+    try {
+
+      const { data, error } = await supabaseClient
+        .from("Resenas")
+        .select("id,nombre,comentario,imagen_url")
+        .order("id", { ascending: false });
+
+      if (error) {
+        console.error("Error cargando Reseñas:", error);
+        grid.innerHTML =
+          `<p class="empty-state">No pudimos cargar las reseñas.</p>`;
+        return;
+      }
+
+      REVIEWS = (data || []).filter(review => review.imagen_url);
+
+      if (!REVIEWS.length) {
+        grid.innerHTML =
+          `<p class="empty-state">Muy pronto compartiremos aquí las reseñas de nuestras clientas.</p>`;
+        return;
+      }
+
+      grid.innerHTML =
+        REVIEWS
+          .map((review, index) => {
+
+            const hasCaption =
+              review.nombre || review.comentario;
+
+            return `
+              <button
+                class="review-photo"
+                onclick="openReviewLightbox(${index})"
+                aria-label="Ver reseña${review.nombre ? ` de ${escapeHTML(review.nombre)}` : ""}"
+              >
+                <img
+                  src="${escapeHTML(review.imagen_url)}"
+                  alt="${escapeHTML(review.nombre || "Reseña de clienta")}"
+                  loading="lazy"
+                >
+                ${hasCaption ? `
+                <div class="review-overlay">
+                  ${review.nombre ? `<p class="review-name">${escapeHTML(review.nombre)}</p>` : ""}
+                  ${review.comentario ? `<p class="review-comment">${escapeHTML(review.comentario)}</p>` : ""}
+                </div>` : ""}
+              </button>
+            `;
+          })
+          .join("");
+
+    } catch (error) {
+
+      console.error(
+        "Error inesperado cargando reseñas:",
+        error
+      );
+
+      grid.innerHTML =
+        `<p class="empty-state">No pudimos cargar las reseñas.</p>`;
+    }
+  }
+
+  window.openReviewLightbox = index => {
+    if (!REVIEWS.length) return;
+
+    lightboxImages = REVIEWS.map(review => review.imagen_url);
+    lightboxIndex = index;
+
+    renderLightbox();
+    $("lightbox").classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+  };
+
+
+  /* =========================
+     CATEGORÍAS (dentro del menú hamburguesa)
   ========================= */
 
   function renderTabs() {
@@ -396,14 +592,14 @@
       )
     ];
 
-    const tabsEl =
-      document.getElementById("tabs");
+    const menuEl =
+      document.getElementById("menuCategories");
 
-    tabsEl.innerHTML =
+    menuEl.innerHTML =
       categories
         .map(category => `
           <button
-            class="tab${category === activeCategory ? " is-active" : ""}"
+            class="menu-tab${category === activeCategory ? " is-active" : ""}"
             data-cat="${escapeHTML(category)}"
           >
             ${escapeHTML(category)}
@@ -412,8 +608,8 @@
         .join("");
 
 
-    tabsEl
-      .querySelectorAll(".tab")
+    menuEl
+      .querySelectorAll(".menu-tab")
       .forEach(button => {
 
         button.addEventListener("click", () => {
@@ -423,10 +619,60 @@
 
           renderTabs();
           renderGrid();
+          closeMenu();
+
+          document
+            .getElementById("pedir")
+            .scrollIntoView({ behavior: "smooth", block: "start" });
         });
 
       });
   }
+
+
+  /* =========================
+     MENÚ HAMBURGUESA
+  ========================= */
+
+  const menuToggle = $("menuToggle");
+  const mobileMenu = $("mobileMenu");
+  const menuOverlay = $("menuOverlay");
+  const menuClose = $("menuClose");
+
+  function openMenu() {
+    mobileMenu.classList.add("is-open");
+    menuOverlay.classList.add("is-open");
+    menuToggle.classList.add("is-active");
+    menuToggle.setAttribute("aria-expanded", "true");
+    mobileMenu.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeMenu() {
+    mobileMenu.classList.remove("is-open");
+    menuOverlay.classList.remove("is-open");
+    menuToggle.classList.remove("is-active");
+    menuToggle.setAttribute("aria-expanded", "false");
+    mobileMenu.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  if (menuToggle) {
+    menuToggle.addEventListener("click", () => {
+      mobileMenu.classList.contains("is-open")
+        ? closeMenu()
+        : openMenu();
+    });
+  }
+
+  if (menuClose) menuClose.addEventListener("click", closeMenu);
+  if (menuOverlay) menuOverlay.addEventListener("click", closeMenu);
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && mobileMenu.classList.contains("is-open")) {
+      closeMenu();
+    }
+  });
 
 
   /* =========================
@@ -605,6 +851,15 @@
   }
 
 
+  const ctaMenu =
+    document.getElementById("cta-menu");
+
+  if (ctaMenu) {
+    ctaMenu.href =
+      waLink(DEFAULT_MESSAGE);
+  }
+
+
   /* =========================
      CONTADOR DE VISITAS
      (suma 1 visita al día actual;
@@ -622,7 +877,9 @@
      INICIAR
   ========================= */
 
+  loadContent();
   loadProducts();
+  loadReviews();
 
 </script>
 </body>
