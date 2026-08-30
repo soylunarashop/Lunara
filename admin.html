@@ -91,6 +91,14 @@
           Productos
         </button>
 
+        <button data-section="reviews">
+          Reseñas
+        </button>
+
+        <button data-section="content">
+          Contenido
+        </button>
+
         <button data-section="stats">
           Estadísticas
         </button>
@@ -213,6 +221,139 @@
           <div id="productList" class="product-list"></div>
 
         </div>
+
+      </section>
+
+
+      <!-- =========================
+           RESEÑAS
+      ========================== -->
+
+      <section id="reviews" class="section">
+
+        <div class="topbar">
+
+          <div>
+            <p class="eyebrow">Testimonios</p>
+            <h1>Reseñas</h1>
+          </div>
+
+          <button class="primary" id="newReviewBtn">
+            + Nueva reseña
+          </button>
+
+        </div>
+
+
+        <div class="panel">
+
+          <div id="reviewList" class="product-list"></div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           CONTENIDO DEL SITIO
+      ========================== -->
+
+      <section id="content" class="section">
+
+        <div class="topbar">
+
+          <div>
+            <p class="eyebrow">Página principal</p>
+            <h1>Títulos y textos</h1>
+          </div>
+
+        </div>
+
+
+        <form id="contentForm" class="panel">
+
+          <div id="contentMessage" class="message hidden"></div>
+
+          <!-- HERO -->
+          <p class="content-group-title">Hero (parte superior)</p>
+          <div class="form-grid">
+
+            <div class="field">
+              <label>Frase pequeña sobre el título</label>
+              <input id="cf_hero_eyebrow" maxlength="60">
+            </div>
+
+            <div class="field">
+              <label>Título principal</label>
+              <input id="cf_hero_title" maxlength="60">
+            </div>
+
+            <div class="field full">
+              <label>Subtítulo</label>
+              <input id="cf_hero_sub" maxlength="140">
+            </div>
+
+          </div>
+
+          <!-- COLECCIÓN -->
+          <p class="content-group-title">Colección</p>
+          <div class="form-grid">
+
+            <div class="field">
+              <label>Frase pequeña sobre la colección</label>
+              <input id="cf_collection_eyebrow" maxlength="60">
+            </div>
+
+            <div class="field">
+              <label>Título de la colección</label>
+              <input id="cf_collection_title" maxlength="80">
+            </div>
+
+          </div>
+
+          <!-- SECCIÓN INTERMEDIA -->
+          <p class="content-group-title">Sección intermedia</p>
+          <div class="form-grid">
+
+            <div class="field full">
+              <label>Frase (arriba de las fases de luna)</label>
+              <input id="cf_statement_text" maxlength="140">
+            </div>
+
+          </div>
+
+          <!-- RESEÑAS -->
+          <p class="content-group-title">Reseñas</p>
+          <div class="form-grid">
+
+            <div class="field">
+              <label>Frase pequeña sobre reseñas</label>
+              <input id="cf_reviews_eyebrow" maxlength="60">
+            </div>
+
+            <div class="field">
+              <label>Título de la sección</label>
+              <input id="cf_reviews_title" maxlength="80">
+            </div>
+
+          </div>
+
+          <!-- WHATSAPP -->
+          <p class="content-group-title">WhatsApp</p>
+          <div class="form-grid">
+
+            <div class="field full">
+              <label>Mensaje con el que llega la gente</label>
+              <textarea id="cf_whatsapp_message" rows="2" maxlength="300"></textarea>
+            </div>
+
+          </div>
+
+          <button class="primary" type="submit" id="saveContentBtn">
+            Guardar cambios
+          </button>
+
+        </form>
 
       </section>
 
@@ -478,6 +619,147 @@
   </div>
 
 
+  <!-- =========================
+       MODAL RESEÑA
+  ========================== -->
+
+  <div
+    id="reviewModal"
+    class="hidden"
+    style="position:fixed;inset:0;background:rgba(20,16,13,.55);display:grid;place-items:center;padding:18px;z-index:20"
+  >
+
+    <form
+      id="reviewForm"
+      class="panel"
+      style="width:min(560px,100%);max-height:94vh;overflow:auto"
+    >
+
+      <div class="panel-head">
+
+        <h2 id="reviewFormTitle">
+          Nueva reseña
+        </h2>
+
+        <button
+          type="button"
+          class="btn"
+          id="closeReviewModal"
+        >
+          Cerrar
+        </button>
+
+      </div>
+
+
+      <div id="reviewFormMessage" class="message hidden"></div>
+
+
+      <div class="form-grid">
+
+        <div class="field full">
+
+          <label>Nombre de la clienta (opcional)</label>
+
+          <input
+            id="rName"
+            maxlength="120"
+            placeholder="Ej. Camila R."
+          >
+
+        </div>
+
+
+        <div class="field full">
+
+          <label>Comentario (opcional)</label>
+
+          <input
+            id="rComment"
+            maxlength="240"
+            placeholder="Ej. Me encantó el pedido, llegó rapidísimo."
+          >
+
+        </div>
+
+
+        <!-- FOTO DE LA RESEÑA -->
+
+        <div class="field full">
+
+          <label>Foto de la reseña</label>
+
+          <label class="drop" for="rImage">
+
+            <span id="rDropText">
+              Selecciona una imagen desde tu celular o computador
+            </span>
+
+            <input
+              id="rImage"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+            >
+
+          </label>
+
+
+          <div class="preview-wrap">
+
+            <img
+              id="rPreview"
+              class="preview"
+              alt="Vista previa"
+            >
+
+            <button
+              type="button"
+              class="btn danger remove-photo hidden"
+              id="removeReviewPhotoBtn"
+            >
+              Quitar foto
+            </button>
+
+          </div>
+
+
+          <small style="color:#756c64">
+            JPG, PNG o WEBP. La imagen se guardará en el almacenamiento de Lunara.
+            La reseña siempre necesita una foto.
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <div
+        style="display:flex;justify-content:flex-end;gap:8px"
+      >
+
+        <button
+          type="button"
+          class="btn"
+          id="cancelReviewBtn"
+        >
+          Cancelar
+        </button>
+
+        <button
+          class="primary"
+          id="saveReviewBtn"
+          type="submit"
+        >
+          Guardar reseña
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+
   <!-- SUPABASE -->
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -508,6 +790,11 @@
     let editingImageUrl2 = null;
     let originalImageUrl = null;
     let originalImageUrl2 = null;
+
+    let reviews = [];
+    let editingReviewId = null;
+    let editingReviewImageUrl = null;
+    let originalReviewImageUrl = null;
 
 
     const $ = id =>
@@ -598,6 +885,8 @@
       $("appView").classList.remove("hidden");
 
       loadProducts();
+      loadReviews();
+      loadContentSettings();
 
       startInactivityWatch();
 
@@ -1101,6 +1390,117 @@
 
 
     /* =========================
+       CARGAR RESEÑAS
+    ========================== */
+
+    async function loadReviews() {
+
+      const {
+        data,
+        error
+      } = await sb
+        .from("Resenas")
+        .select(
+          "id,nombre,comentario,imagen_url"
+        )
+        .order(
+          "id",
+          {
+            ascending: false
+          }
+        );
+
+
+      if (error) {
+
+        console.error(error);
+
+        message(
+          $("reviewFormMessage"),
+          "No se pudieron cargar las reseñas."
+        );
+
+        return;
+      }
+
+
+      reviews = data || [];
+
+      renderReviewList();
+
+    }
+
+
+    /* =========================
+       MOSTRAR LISTA DE RESEÑAS
+    ========================== */
+
+    function renderReviewList() {
+
+      const el = $("reviewList");
+
+      if (!reviews.length) {
+
+        el.innerHTML =
+          '<div class="empty">No hay reseñas registradas.</div>';
+
+        return;
+      }
+
+
+      el.innerHTML =
+        reviews.map(
+          r => `
+
+            <div class="product-row">
+
+              <img
+                class="thumb"
+                src="${escapeHTML(r.imagen_url)}"
+                alt=""
+              >
+
+              <div>
+
+                <div class="product-name">
+                  ${escapeHTML(r.nombre || "Clienta anónima")}
+                </div>
+
+                <div class="product-meta">
+                  ${escapeHTML(r.comentario || "Sin comentario")}
+                </div>
+
+              </div>
+
+
+              <div class="actions">
+
+                <button
+                  class="btn"
+                  onclick="editReview('${r.id}')"
+                >
+                  Editar
+                </button>
+
+
+                <button
+                  class="btn danger"
+                  onclick="deleteReview('${r.id}')"
+                >
+                  Eliminar
+                </button>
+
+              </div>
+
+            </div>
+
+          `
+        ).join("");
+
+    }
+
+
+    /* =========================
        CAMBIAR SECCIÓN
     ========================== */
 
@@ -1262,6 +1662,97 @@
 
 
     /* =========================
+       ABRIR MODAL RESEÑA
+    ========================== */
+
+    function openReviewModal(review = null) {
+
+      editingReviewId =
+        review?.id || null;
+
+
+      editingReviewImageUrl =
+        review?.imagen_url || null;
+
+
+      originalReviewImageUrl =
+        editingReviewImageUrl;
+
+
+      $("reviewFormTitle").textContent =
+        review
+          ? "Editar reseña"
+          : "Nueva reseña";
+
+
+      $("rName").value =
+        review?.nombre || "";
+
+
+      $("rComment").value =
+        review?.comentario || "";
+
+
+      $("rImage").value = "";
+
+
+      $("rDropText").textContent =
+        review
+          ? "Selecciona una nueva imagen (opcional)"
+          : "Selecciona una imagen desde tu celular o computador";
+
+
+      $("rPreview").src =
+        review?.imagen_url || "";
+
+
+      $("rPreview").style.display =
+        review?.imagen_url
+          ? "block"
+          : "none";
+
+
+      $("removeReviewPhotoBtn")
+        .classList.toggle(
+          "hidden",
+          !editingReviewImageUrl
+        );
+
+
+      message(
+        $("reviewFormMessage"),
+        "",
+        false
+      );
+
+
+      $("reviewModal")
+        .classList.remove(
+          "hidden"
+        );
+
+
+      $("reviewModal").style.display =
+        "grid";
+
+    }
+
+
+    function closeReviewModal() {
+
+      $("reviewModal")
+        .classList.add(
+          "hidden"
+        );
+
+
+      $("reviewModal").style.display =
+        "none";
+
+    }
+
+
+    /* =========================
        EDITAR
     ========================== */
 
@@ -1344,6 +1835,90 @@
 
 
         await loadProducts();
+
+      };
+
+
+    /* =========================
+       EDITAR RESEÑA
+    ========================== */
+
+    window.editReview =
+      id => {
+
+        const review =
+          reviews.find(
+            r => r.id === id
+          );
+
+
+        if (review) {
+
+          openReviewModal(review);
+
+        }
+
+      };
+
+
+    /* =========================
+       ELIMINAR RESEÑA
+    ========================== */
+
+    window.deleteReview =
+      async id => {
+
+        const review =
+          reviews.find(
+            r => r.id === id
+          );
+
+
+        if (
+          !review ||
+          !confirm(
+            `¿Eliminar la reseña de "${review.nombre || "esta clienta"}"?`
+          )
+        ) {
+
+          return;
+
+        }
+
+
+        const { error } =
+          await sb
+            .from("Resenas")
+            .delete()
+            .eq(
+              "id",
+              id
+            );
+
+
+        if (!error) {
+
+          await deleteImageFromStorage(
+            review.imagen_url,
+            "Resenas"
+          );
+
+        }
+
+
+        if (error) {
+
+          alert(
+            "No se pudo eliminar: " +
+            error.message
+          );
+
+          return;
+
+        }
+
+
+        await loadReviews();
 
       };
 
@@ -1560,7 +2135,7 @@
        BORRAR IMAGEN STORAGE
     ========================== */
 
-    function storagePathFromUrl(url) {
+    function storagePathFromUrl(url, bucket = "Productos") {
 
       if (!url) {
 
@@ -1570,7 +2145,7 @@
 
 
       const marker =
-        "/Productos/";
+        `/${bucket}/`;
 
 
       const idx =
@@ -1595,10 +2170,10 @@
     }
 
 
-    async function deleteImageFromStorage(url) {
+    async function deleteImageFromStorage(url, bucket = "Productos") {
 
       const path =
-        storagePathFromUrl(url);
+        storagePathFromUrl(url, bucket);
 
 
       if (!path) {
@@ -1610,7 +2185,7 @@
 
       const { error } =
         await sb.storage
-          .from("Productos")
+          .from(bucket)
           .remove([path]);
 
 
@@ -1632,7 +2207,8 @@
 
     async function uploadImage(
       file,
-      fallbackUrl
+      fallbackUrl,
+      bucket = "Productos"
     ) {
 
       if (!file) {
@@ -1693,7 +2269,7 @@
 
       const { error } =
         await sb.storage
-          .from("Productos")
+          .from(bucket)
           .upload(
             path,
             finalFile,
@@ -1714,7 +2290,7 @@
 
       const { data } =
         sb.storage
-          .from("Productos")
+          .from(bucket)
           .getPublicUrl(
             path
           );
@@ -1787,8 +2363,123 @@
       () => sb.auth.signOut();
 
 
+    /* =========================
+       CONTENIDO DEL SITIO
+       (títulos y textos de index.html)
+    ========================== */
+
+    const CONTENT_FIELDS = [
+      { key: "hero_eyebrow", id: "cf_hero_eyebrow", default: "Nueva colección" },
+      { key: "hero_title", id: "cf_hero_title", default: "Lunara" },
+      { key: "hero_sub", id: "cf_hero_sub", default: "Moda, belleza y estilo para ti." },
+      { key: "collection_eyebrow", id: "cf_collection_eyebrow", default: "Disponible ahora" },
+      { key: "collection_title", id: "cf_collection_title", default: "Colección Luna Creciente" },
+      { key: "statement_text", id: "cf_statement_text", default: "Moda, belleza, accesorios y detalles que te harán brillar." },
+      { key: "reviews_eyebrow", id: "cf_reviews_eyebrow", default: "Lo que dicen de nosotras" },
+      { key: "reviews_title", id: "cf_reviews_title", default: "Reseñas de clientas" },
+      { key: "whatsapp_message", id: "cf_whatsapp_message", default: "Hola, quiero más información sobre la colección de Lunara." }
+    ];
+
+
+    async function loadContentSettings() {
+
+      if (!sb) return;
+
+      try {
+
+        const { data, error } = await sb
+          .from("Configuracion")
+          .select("clave,valor");
+
+        if (error) throw error;
+
+        const textos = {};
+
+        (data || []).forEach(
+          fila => { textos[fila.clave] = fila.valor; }
+        );
+
+        CONTENT_FIELDS.forEach(campo => {
+
+          const input = $(campo.id);
+
+          if (input) {
+            input.value = textos[campo.key] ?? campo.default;
+          }
+
+        });
+
+      } catch (error) {
+
+        console.error(
+          "Error cargando el contenido del sitio:",
+          error
+        );
+
+      }
+
+    }
+
+
+    $("contentForm").addEventListener(
+      "submit",
+      async event => {
+
+        event.preventDefault();
+
+        const btn = $("saveContentBtn");
+
+        btn.disabled = true;
+        btn.textContent = "Guardando...";
+
+        try {
+
+          const filas = CONTENT_FIELDS.map(campo => ({
+            clave: campo.key,
+            valor: ($(campo.id).value || "").trim()
+          }));
+
+          const { error } = await sb
+            .from("Configuracion")
+            .upsert(filas, { onConflict: "clave" });
+
+          if (error) throw error;
+
+          message(
+            $("contentMessage"),
+            "Cambios guardados. Actualiza tu página para verlos."
+          );
+
+        } catch (error) {
+
+          console.error(
+            "Error guardando el contenido del sitio:",
+            error
+          );
+
+          message(
+            $("contentMessage"),
+            error.message ||
+            "No se pudieron guardar los cambios."
+          );
+
+        } finally {
+
+          btn.disabled = false;
+          btn.textContent = "Guardar cambios";
+
+        }
+
+      }
+    );
+
+
     $("newProductBtn").onclick =
       () => openModal();
+
+
+    $("newReviewBtn").onclick =
+      () => openReviewModal();
 
 
     $("newFromDash").onclick =
@@ -1859,6 +2550,11 @@
     $("closeModal").onclick =
       $("cancelBtn").onclick =
       closeModal;
+
+
+    $("closeReviewModal").onclick =
+      $("cancelReviewBtn").onclick =
+      closeReviewModal;
 
 
     /* =========================
@@ -1941,6 +2637,44 @@
       };
 
 
+    $("rImage").onchange =
+      e => {
+
+        const file =
+          e.target.files[0];
+
+
+        if (!file) {
+
+          return;
+
+        }
+
+
+        $("rDropText")
+          .textContent =
+          file.name;
+
+
+        $("rPreview").src =
+          URL.createObjectURL(
+            file
+          );
+
+
+        $("rPreview")
+          .style.display =
+          "block";
+
+
+        $("removeReviewPhotoBtn")
+          .classList.remove(
+            "hidden"
+          );
+
+      };
+
+
     /* =========================
        QUITAR FOTO
     ========================== */
@@ -1994,6 +2728,34 @@
 
 
         $("removePhoto2Btn")
+          .classList.add(
+            "hidden"
+          );
+
+      };
+
+
+    $("removeReviewPhotoBtn").onclick =
+      () => {
+
+        $("rImage").value = "";
+
+        editingReviewImageUrl = null;
+
+
+        $("rPreview").src = "";
+
+        $("rPreview")
+          .style.display =
+          "none";
+
+
+        $("rDropText")
+          .textContent =
+          "Selecciona una imagen desde tu celular o computador";
+
+
+        $("removeReviewPhotoBtn")
           .classList.add(
             "hidden"
           );
@@ -2208,6 +2970,155 @@
 
             btn.textContent =
               "Guardar producto";
+
+          }
+
+        }
+      );
+
+
+    /* =========================
+       GUARDAR / EDITAR RESEÑA
+    ========================== */
+
+    $("reviewForm")
+      .addEventListener(
+        "submit",
+        async e => {
+
+          e.preventDefault();
+
+
+          const btn =
+            $("saveReviewBtn");
+
+
+          btn.disabled = true;
+
+          btn.textContent =
+            "Guardando...";
+
+
+          let newImageUrl = null;
+
+
+          try {
+
+            const imageUrl =
+              await uploadImage(
+                $("rImage").files[0],
+                editingReviewImageUrl,
+                "Resenas"
+              );
+
+
+            if (!imageUrl) {
+
+              throw new Error(
+                "Selecciona una foto para la reseña."
+              );
+
+            }
+
+
+            if (
+              imageUrl !==
+              editingReviewImageUrl
+            ) {
+
+              newImageUrl =
+                imageUrl;
+
+            }
+
+
+            const payload = {
+
+              nombre:
+                $("rName")
+                  .value
+                  .trim() || null,
+
+              comentario:
+                $("rComment")
+                  .value
+                  .trim() || null,
+
+              imagen_url:
+                imageUrl
+
+            };
+
+
+            const result =
+              editingReviewId
+
+                ? await sb
+                    .from("Resenas")
+                    .update(payload)
+                    .eq(
+                      "id",
+                      editingReviewId
+                    )
+
+                : await sb
+                    .from("Resenas")
+                    .insert(
+                      payload
+                    );
+
+
+            if (result.error) {
+
+              throw result.error;
+
+            }
+
+
+            if (
+              originalReviewImageUrl &&
+              originalReviewImageUrl !==
+              imageUrl
+            ) {
+
+              await deleteImageFromStorage(
+                originalReviewImageUrl,
+                "Resenas"
+              );
+
+            }
+
+
+            closeReviewModal();
+
+            await loadReviews();
+
+
+          } catch (err) {
+
+            if (newImageUrl) {
+
+              await deleteImageFromStorage(
+                newImageUrl,
+                "Resenas"
+              );
+
+            }
+
+
+            message(
+              $("reviewFormMessage"),
+              err.message ||
+              "No se pudo guardar la reseña."
+            );
+
+
+          } finally {
+
+            btn.disabled = false;
+
+            btn.textContent =
+              "Guardar reseña";
 
           }
 
