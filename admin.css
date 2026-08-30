@@ -278,6 +278,25 @@ h1{
 }
 
 
+.content-group-title{
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  font-size:12px;
+  font-weight:600;
+  color:var(--lilac-deep);
+  margin:26px 0 12px;
+  padding-top:18px;
+  border-top:1px solid var(--line);
+}
+
+
+.content-group-title:first-of-type{
+  margin-top:0;
+  padding-top:0;
+  border-top:none;
+}
+
+
 .field label{
   font-size:12px;
   text-transform:uppercase;
@@ -287,7 +306,8 @@ h1{
 
 
 input,
-select{
+select,
+textarea{
   width:100%;
   border:1px solid var(--line);
   background:#fff;
@@ -295,11 +315,14 @@ select{
   border-radius:10px;
   outline:none;
   color:var(--ink);
+  font-family:inherit;
+  resize:vertical;
 }
 
 
 input:focus,
-select:focus{
+select:focus,
+textarea:focus{
   border-color:var(--lilac);
 }
 
