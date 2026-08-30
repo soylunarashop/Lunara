@@ -1761,7 +1761,7 @@
 
         const product =
           products.find(
-            p => p.id === id
+            p => String(p.id) === String(id)
           );
 
 
@@ -1783,7 +1783,7 @@
 
         const product =
           products.find(
-            p => p.id === id
+            p => String(p.id) === String(id)
           );
 
 
@@ -1848,7 +1848,7 @@
 
         const review =
           reviews.find(
-            r => r.id === id
+            r => String(r.id) === String(id)
           );
 
 
@@ -1870,7 +1870,7 @@
 
         const review =
           reviews.find(
-            r => r.id === id
+            r => String(r.id) === String(id)
           );
 
 
